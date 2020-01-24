@@ -10,14 +10,15 @@ export class AuthService {
         private jwtService: JwtService) {
     }
 
-    login(login: LoginViewModel) {
-        const user = this.userService.attemptLogin(login);
+    async login(login: LoginViewModel) {
+        const user = await this.userService.attemptLogin(login);
 
         if (!user) {
             throw new BadRequestException('Incorrect Credentials');
         } 
         return {
             access_token: this.jwtService.sign({ status : 'Authorized'}),
+            userId: user._id,
         };
     }
 
@@ -33,4 +34,18 @@ export class AuthService {
         };
     }
 
+    put(user: UserViewModel, newUser: UserViewModel){
+
+        if(user.userLogin != newUser.userLogin || user.password != newUser.password)
+            throw new Error('It is not posible to change de login or de password!');
+
+        const uuser = this.userService.putOldUser(user, newUser);
+    
+        if (!user) {
+            throw new BadRequestException('Incorrect Credentials');
+        } 
+        return {
+            access_token: this.jwtService.sign({ status : 'Updated!'}),
+        };
+    }
 }

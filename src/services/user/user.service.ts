@@ -12,9 +12,9 @@ export class UserService {
         return this.userRepository.getUsers();
     }
 
-    createNewUser(newUser: UserViewModel) {
+    async createNewUser(newUser: UserViewModel) {
 
-        const userList = this.userRepository.getUsers();
+        const userList = await this.userRepository.getUsers();
 
         const existingUser = userList.find(x => x.userName === newUser.userName);
 
@@ -25,8 +25,8 @@ export class UserService {
         return this.userRepository.createUser(newUser);
     }
 
-    attemptLogin(login: LoginViewModel) {
-        const userList = this.userRepository.getUsers();
+    async attemptLogin(login: LoginViewModel) {
+        const userList = await this.userRepository.getUsers();
 
         const foundLogin = userList
             .find(x =>
@@ -36,16 +36,45 @@ export class UserService {
         return foundLogin;
     }
 
-    deleteOldUser(oldUser: UserViewModel){
-        const userList = this.userRepository.getUsers();
+     deleteOldUser(oldUser: UserViewModel){
+        /*const userList = await this.userRepository.getUsers();
 
-        const existingUser = userList.find(x => x.userName === oldUser.userName);
+        const existingUser = userList.find(x => x.userLogin === oldUser.userLogin);
 
         if (!existingUser) {
             throw new BadRequestException('This username does not exists!');
         }
 
-        return this.userRepository.deleteUser(oldUser);
+        return this.userRepository.deleteUser(oldUser);*/
+    }
+
+    putOldUser(oldUser: UserViewModel, newUser: UserViewModel){
+        /*const userList = await this.userRepository.getUsers();
+
+        const existingUser = userList.find(x => x.userLogin === oldUser.userLogin);
+
+        if(!existingUser){
+            throw new BadRequestException('This login does not exist!');
+        }
+
+        return this.userRepository.updateUser(oldUser, newUser);*/
+    }
+
+    addUserList(list:UserViewModel[]){
+       /* const userList = await this.userRepository.getUsers();
+
+        let existingUser = null;
+
+        for(var i = 0; i < list.length; i++)
+        {
+            existingUser = userList.find(x => x.userLogin === list[i].userLogin);
+        }
+
+        if(existingUser){
+            throw new BadRequestException('Some of de users already exists!')
+        }
+
+        return this.userRepository.addListOfUser(list);*/
     }
 
 }

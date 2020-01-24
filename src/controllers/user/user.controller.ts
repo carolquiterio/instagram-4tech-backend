@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Put, Delete } from '@nestjs/common';
 import { UserService } from 'src/services/user/user.service';
 import { UserViewModel } from 'src/domain/user.viewmodel';
 import { AuthGuard } from '@nestjs/passport';
@@ -7,7 +7,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class UserController {
 
     constructor(private userService: UserService) {
-    }
+    } 
 
     @UseGuards(AuthGuard('jwt'))
 
@@ -21,4 +21,18 @@ export class UserController {
         return this.userService.createNewUser(newUser);
     }
 
+    @Put()
+    atualizarUsuario(@Body() old: UserViewModel, newU: UserViewModel){
+        return this.userService.putOldUser(old, newU);
+    }
+
+    @Delete()
+    deletarUsuario(@Body() user: UserViewModel){
+        return this.userService.deleteOldUser(user);
+    }
+
+    @Post("lista")
+    adicionaListaDeUsuarios(@Body() list: UserViewModel[]){
+        return this.userService.addUserList(list);
+    }
 }

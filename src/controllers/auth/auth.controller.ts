@@ -1,6 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { LoginViewModel } from 'src/domain/login.viewmodel';
 import { AuthService } from 'src/services/auth/auth.service';
+import { UserViewModel } from 'src/domain/user.viewmodel';
 
 @Controller('auth')
 export class AuthController {
@@ -11,5 +12,4 @@ export class AuthController {
     login(@Body() login: LoginViewModel) {
         return this.authService.login(login);
     }
-
 }
