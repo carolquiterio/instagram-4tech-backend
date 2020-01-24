@@ -15,4 +15,10 @@ export class UserRepository {
         this.db.push(newUser);
         return 'User successfully added';
     }
+
+    deleteUser(oldUser: UserViewModel) {
+        const index = this.db.indexOf( oldUser );
+        this.db.splice(index, index)
+        return 'User successfully deleteded';
+    }
 }

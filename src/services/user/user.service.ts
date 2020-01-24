@@ -36,4 +36,16 @@ export class UserService {
         return foundLogin;
     }
 
+    deleteOldUser(oldUser: UserViewModel){
+        const userList = this.userRepository.getUsers();
+
+        const existingUser = userList.find(x => x.userName === oldUser.userName);
+
+        if (!existingUser) {
+            throw new BadRequestException('This username does not exists!');
+        }
+
+        return this.userRepository.deleteUser(oldUser);
+    }
+
 }
