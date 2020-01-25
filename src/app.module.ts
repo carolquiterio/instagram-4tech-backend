@@ -15,6 +15,7 @@ import { UserActivitySchema } from './domain/schemas/user-activity.schema';
 import { UserActivityService } from './services/user-activity/user-activity.service';
 import { MulterModule } from '@nestjs/platform-express';
 import { UserActivityRepository } from './repositories/user-activity-repository/user-activity.repository';
+import { WebsocketGateway } from './websocket.gateway';
 
 @Module({
   imports: [
@@ -36,6 +37,6 @@ import { UserActivityRepository } from './repositories/user-activity-repository/
     MulterModule.register()
   ],
   controllers: [AppController, UserController, AuthController, UserActivityController],
-  providers: [AppService, UserService, UserRepository, AuthService, JwtStrategy, UserActivityService, UserActivityRepository],
+  providers: [AppService, UserService, UserRepository, AuthService, JwtStrategy, UserActivityService, UserActivityRepository, WebsocketGateway],
 })
 export class AppModule { }
