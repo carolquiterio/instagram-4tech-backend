@@ -13,6 +13,8 @@ import { UserSchema } from './domain/schemas/user.schema';
 import { UserActivityController } from './controllers/user-activity/user-activity.controller';
 import { UserActivitySchema } from './domain/schemas/user-activity.schema';
 import { UserActivityService } from './services/user-activity/user-activity.service';
+import { MulterModule } from '@nestjs/platform-express';
+import { UserActivityRepository } from './repositories/user-activity-repository/user-activity.repository';
 
 @Module({
   imports: [
@@ -27,12 +29,13 @@ import { UserActivityService } from './services/user-activity/user-activity.serv
     JwtModule.register(
       {
         secret: secretKey, signOptions: {
-          expiresIn: '600m1m',
+          expiresIn: '600m',
         }
       }
-    )
+    ),
+    MulterModule.register()
   ],
-  controllers: [AppController, UserController, AuthController, UserActivityController, UserActivityService],
-  providers: [AppService, UserService, UserRepository, AuthService, JwtStrategy ],
+  controllers: [AppController, UserController, AuthController, UserActivityController],
+  providers: [AppService, UserService, UserRepository, AuthService, JwtStrategy, UserActivityService, UserActivityRepository],
 })
 export class AppModule { }

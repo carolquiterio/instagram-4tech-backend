@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { Document } from 'mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
 
 

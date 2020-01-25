@@ -3,15 +3,16 @@ import { UserViewModel } from 'src/domain/user.viewmodel';
 import { UserService } from '../user/user.service';
 import { LoginViewModel } from 'src/domain/login.viewmodel';
 import { JwtService } from '@nestjs/jwt';
+import { UserRepository } from 'src/repositories/user-repository/user-repository';
 
 @Injectable()
 export class AuthService {
-    constructor(private userService: UserService,
+    constructor(private userRepository: UserRepository,
         private jwtService: JwtService) {
     }
 
     async login(login: LoginViewModel) {
-        const user = await this.userService.attemptLogin(login);
+        const user = await this.userRepository.getByCredetials(login.userLogin, login.password);
 
         if (!user) {
             throw new BadRequestException('Incorrect Credentials');
@@ -22,9 +23,10 @@ export class AuthService {
         };
     }
 
-    delete(user: UserViewModel){
+   /*
+    async delete(user: UserViewModel){
 
-        const uuser = this.userService.deleteOldUser(user);
+        const uuser = this.userRepository.deleteOldUser(user);
     
         if (!user) {
             throw new BadRequestException('Incorrect Credentials');
@@ -34,7 +36,7 @@ export class AuthService {
         };
     }
 
-    put(user: UserViewModel, newUser: UserViewModel){
+    async put(user: UserViewModel, newUser: UserViewModel){
 
         if(user.userLogin != newUser.userLogin || user.password != newUser.password)
             throw new Error('It is not posible to change de login or de password!');
@@ -48,4 +50,5 @@ export class AuthService {
             access_token: this.jwtService.sign({ status : 'Updated!'}),
         };
     }
+    */
 }
